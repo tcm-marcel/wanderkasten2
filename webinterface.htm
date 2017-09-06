@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user scalable=no"/>
+  <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAIxJREFUOI3FkT0OhCAQhb/RtaC1MXG5gPe/h60XQEtbChPZZknAn0Cw8JUwb+Z7M/C25Phg0W5iyzIPNFRHc+7kgSYmCM0KcyK7GyQAM3325PYPrTBi0a5K1F8qJPyEH18WsWh3FeGOMmrgs410yUi+tihCuMSIYGUHoKPOblZE4KUwUtzAL/rxGd/XD/y1JGqkVhxtAAAAAElFTkSuQmCC" />
+  <meta name="theme-color" content="#444">
+  <meta name="msapplication-navbutton-color" content="#444">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#444">
+  <style type="text/css">
+    body {
+      background-color: #444;
+      color: #FFF;
+      padding: 0 20px;
+    }
+    
+    h1 {
+      font-family: sans;
+      margin: 20px 0;
+      padding: 0;
+    }
+    
+    button {
+      border: 2px solid #FFF;
+      padding: 10px 20px;
+      font-size: 1.5em;
+      background-color: #444;
+      color: #FFF;
+      border-radius: 5px;
+      width: 100%;
+      margin: 10px 0;
+    }
+    
+    #footer {
+      text-align: right;
+    }
+    
+    #color-slider-canvas {
+      display: none;
+    }
+    
+    input[type=range].slider {
+      -webkit-appearance: none;
+      margin: 10px 0;
+      width: 100%;
+    }
+    input[type=range].slider:focus {
+      outline: none;
+    }
+    input[type=range].slider::-webkit-slider-runnable-track {
+      width: 100%;
+      height: 36px;
+      cursor: pointer;
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+      background: #444444;
+      border-radius: 5px;
+      border: 2px solid #faffff;
+    }
+    input[type=range].slider::-webkit-slider-thumb {
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4), 0px 0px 0px rgba(13, 13, 13, 0.4);
+      border: 2px solid #444444;
+      height: 32px;
+      width: 64px;
+      border-radius: 5px;
+      background: #ffffff;
+      cursor: pointer;
+      -webkit-appearance: none;
+      margin-top: 0px;
+    }
+    input[type=range].slider:focus::-webkit-slider-runnable-track {
+      background: #515151;
+    }
+    input[type=range].slider::-moz-range-track {
+      width: 100%;
+      height: 36px;
+      cursor: pointer;
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+      background: #444444;
+      border-radius: 5px;
+      border: 2px solid #faffff;
+    }
+    input[type=range].slider::-moz-range-thumb {
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4), 0px 0px 0px rgba(13, 13, 13, 0.4);
+      border: 2px solid #444444;
+      height: 32px;
+      width: 64px;
+      border-radius: 5px;
+      background: #ffffff;
+      cursor: pointer;
+    }
+    input[type=range].slider::-ms-track {
+      width: 100%;
+      height: 36px;
+      cursor: pointer;
+      background: transparent;
+      border-color: transparent;
+      color: transparent;
+    }
+    input[type=range].slider::-ms-fill-lower {
+      background: #373737;
+      border: 2px solid #faffff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    }
+    input[type=range].slider::-ms-fill-upper {
+      background: #444444;
+      border: 2px solid #faffff;
+      border-radius: 10px;
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0), 0px 0px 0px rgba(13, 13, 13, 0);
+    }
+    input[type=range].slider::-ms-thumb {
+      box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.4), 0px 0px 0px rgba(13, 13, 13, 0.4);
+      border: 2px solid #444444;
+      width: 64px;
+      border-radius: 5px;
+      background: #ffffff;
+      cursor: pointer;
+      height: 32px;
+    }
+    input[type=range].slider:focus::-ms-fill-lower {
+      background: #444444;
+    }
+    input[type=range].slider:focus::-ms-fill-upper {
+      background: #515151;
+    }
+    
+    #color-slider::-webkit-slider-runnable-track {
+      background: linear-gradient(to right, red, orange, yellow, green, aqua, blue, purple, deeppink, red);
+    }
+    #color-slider::-ms-track {
+      background: linear-gradient(to right, red, orange, yellow, green, aqua, blue, purple, deeppink, red);
+    }
+    #color-slider::-moz-range-track {
+      background: linear-gradient(to right, red, orange, yellow, green, aqua, blue, purple, deeppink, red);
+    }
+
+  </style>
+  
+  <script type="text/javascript">
+    function throttle(func, wait) {
+      var timeout;
+      return function() {
+        var context = this, args = arguments;
+        if (!timeout) {
+          timeout = setTimeout(function() {
+            timeout = null;
+            func.apply(context, args);
+          }, wait);
+        }
+      }
+    }
+    
+    var gradient = new Array(
+      "red", 
+      "orange", 
+      "yellow", 
+      "green", 
+      "aqua", 
+      "blue", 
+      "purple", 
+      "deeppink", 
+      "red"
+    );
+    
+    var current_color = [0, 0, 0];
+    
+    var send_color_thottled = throttle(send_color, 100);
+    var send_value_thottled = throttle(send_value, 100);
+    
+    function slide(d) {
+      var sl = document.getElementById("color-slider-canvas");
+      var ctx = sl.getContext("2d");
+      var x = (d == 1) ? (sl.width - 1) : (d * sl.width);
+      var p = ctx.getImageData(x, 0, 1, 1).data;
+      c = p.slice(0, 3);
+      
+      if (current_color.toString() != c.toString()) {
+        current_color = c;
+        send_color_thottled(c);
+      }
+    }
+    
+    function send_op(op)
+    {
+      var http = new XMLHttpRequest();
+      http.open("POST", '/api/' + op, true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      http.send();
+    }
+    
+    function send_color(c)
+    {
+      var http = new XMLHttpRequest();
+      http.open("POST", '/api/mode/color', true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      
+      http.send('r=' + c[0] + '&g=' + c[1] + '&b=' + c[2]);
+      
+    }
+    
+    function send_value(v)
+    {
+      var http = new XMLHttpRequest();
+      http.open("POST", '/api/mode/value', true);
+      http.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+      http.send('v=' + v);
+    }
+    
+    function onload() {
+      document.body.addEventListener('touchmove', function(event) {
+        event.preventDefault();
+      }, false);
+      
+      
+      var c = document.getElementById("color-slider-canvas");
+      var ctx = c.getContext("2d");
+      var grd = ctx.createLinearGradient(0, 0, c.width, 0);
+      
+      for (var i = 0; i < gradient.length; i++) {
+        grd.addColorStop(i / (gradient.length - 1), gradient[i]);
+      }
+      ctx.fillStyle = grd;
+      ctx.fillRect(0, 0, c.width, c.height);
+      
+    }
+  </script>
+  
+  <title>Wanderkasten</title>
+</head>
+
+<body onload="onload()">
+  <h1>Wanderkasten</h1>
+  
+  <input class="slider" id="color-slider" type="range" min="0" max="1000" oninput="slide(this.value / 1000)">
+  <input class="slider" type="range" min="0" max="255" oninput="send_value_thottled(this.value)">
+  
+  <button onclick="send_op('mode/next')">next!</button>
+  <canvas id="color-slider-canvas"></canvas>
+  
+  <p>WiFi schaltet sich 30sec nach dem Einschalten des Kastens automatisch aus, wenn sich kein Gerät verbunden hat. </p>
+  
+  <button onclick="window.location.href='/koenigslied'">Königslied</button>
+  <button onclick="if (confirm('WiFi wirklich ausschalten?\n(Kasten aus- und einschalten, um Wifi wieder zu aktivieren)')) send_op('wifi/off');">WiFi off</button>
+  
+  <div id="footer">
+    &copy; Marcel&amp;Marcel
+  </div>
+</body>
+</html>

@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="de">
+<head>
+  <meta charset="utf-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user scalable=no"/>
+  <link rel="shortcut icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAIxJREFUOI3FkT0OhCAQhb/RtaC1MXG5gPe/h60XQEtbChPZZknAn0Cw8JUwb+Z7M/C25Phg0W5iyzIPNFRHc+7kgSYmCM0KcyK7GyQAM3325PYPrTBi0a5K1F8qJPyEH18WsWh3FeGOMmrgs410yUi+tihCuMSIYGUHoKPOblZE4KUwUtzAL/rxGd/XD/y1JGqkVhxtAAAAAElFTkSuQmCC" />
+  <meta name="theme-color" content="#444">
+  <meta name="msapplication-navbutton-color" content="#444">
+  <meta name="apple-mobile-web-app-status-bar-style" content="#444">
+  <style type="text/css">
+    body {
+      background-color: #444;
+      color: #FFF;
+      padding: 0 20px;
+    }
+    
+    h1 {
+      font-family: sans;
+      margin: 20px 0;
+      padding: 0;
+    }
+    
+    button {
+      border: 2px solid #FFF;
+      padding: 10px 20px;
+      font-size: 1.5em;
+      background-color: #444;
+      color: #FFF;
+      border-radius: 5px;
+      width: 100%;
+    }
+      
+    li {
+      margin: 10px;
+    }
+    
+    li.ref {
+      list-style-type: none;
+      font-style: italic;
+      color: #bbb;
+    }
+    
+    #text_alt {
+      display: none;
+    }
+    
+  </style>
+  <script type="text/javascript">
+    function c() {
+      var tmp = window.getComputedStyle(document.getElementById("text_org"), null)['display'];
+      document.getElementById("text_org").style.display = window.getComputedStyle(document.getElementById("text_alt"), null)['display'];
+      document.getElementById("text_alt").style.display = tmp;
+    }
+    
+    function onload() {
+      (function loop() {
+        var rand = Math.round(Math.random() * (3000) + 500);
+        setTimeout(function() {
+          c();
+          setTimeout(c, 250);
+          loop();  
+        }, rand);
+      }());
+    }
+  </script>
+  <title>Königslied</title>
+</head>
+
+<body onload="onload()">
+  THIS CONTENT HAS BEEN REMOVED BEFORE PUBLISHING TO GITHUB<br />
+  REFER TO MARCEL FOR ORIGINAL FILE
+  
+  <button onclick="javascript:history.back()">zurück</button>
+
+</body>
+</html>
